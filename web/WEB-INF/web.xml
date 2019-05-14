@@ -4,9 +4,17 @@
         <servlet-name>ServletClientePessoa</servlet-name>
         <servlet-class>br.senac.controle.ServletClientePessoa</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>ServletClienteEstoque</servlet-name>
+        <servlet-class>atividade9.controle.ServletClienteEstoque</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>ServletClientePessoa</servlet-name>
         <url-pattern>/ServletClientePessoa</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ServletClienteEstoque</servlet-name>
+        <url-pattern>/servletclienteestoque</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

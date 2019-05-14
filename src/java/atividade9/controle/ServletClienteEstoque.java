@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package br.senac.controle;
+package atividade9.controle;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -21,9 +21,9 @@ import javax.servlet.http.HttpServletResponse;
 
 /**
  *
- * @author Aluno
+ * @author 80119050
  */
-public class ServletClientePessoa extends HttpServlet {
+public class ServletClienteEstoque extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -39,31 +39,36 @@ public class ServletClientePessoa extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             
+            URL url = new URL("http://localhost:8080/JSON-Serializacao/servletservicoestoque");
             
-        URL url = new URL("http://localhost:8080/ExemploJSON-Serializacao/ServletServicoPessoa");
-        BufferedReader in = new BufferedReader(new InputStreamReader(url.openStream()));
-        String inputLine;
-        String jsonString="";
-        while ((inputLine = in.readLine()) != null){
+            BufferedReader br = new BufferedReader(new InputStreamReader(url.openStream()));
+            String inputLine;
+            String jsonString = "";
+            while ((inputLine = br.readLine()) != null){
             jsonString += inputLine;
-        }
-        in.close();
-        
-        Gson gson = new GsonBuilder().create();
-        ArrayList<Pessoa> listaFromJSON = (ArrayList<Pessoa>)gson.fromJson(jsonString,new TypeToken<ArrayList<Pessoa>>(){}.getType());
-     
+            }
+            br.close();
+            
+            Gson gson = new GsonBuilder().create();
+            ArrayList<Estoque> listaDeItensFromJSON = (ArrayList<Estoque>)gson.fromJson(jsonString,new TypeToken<ArrayList<Estoque>>(){}.getType());
+            
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet ServletClientePessoa</title>");            
+            out.println("<title>Servlet ServletClienteEstoque</title>");            
             out.println("</head>");
             out.println("<body>");
-            for(Pessoa p: listaFromJSON){
-                out.println("<b>Nome:</b>"+p.getNome());
+            for(Estoque e: listaDeItensFromJSON){
+                out.println("<b>Código do Produto:</b> " +e.getCodigoDoEstoque());
                 out.println("<br/>");
-                out.println("<b>Sobrenome:</b>"+p.getSobreNome());
-                out.println("<br/>");out.println("<br/>");out.println("<br/>");
-              
+                out.println("<b>Nome:</b> " +e.getNome());
+                out.println("<br/>");
+                out.println("<b>Descrição:</b> " +e.getDescricao());
+                out.println("<br/>");
+                out.println("<b>Valor:</b> " +e.getValor());
+                out.println("<br/>");
+                out.println("<b>e-mail do vendedor:</b> " +e.getEmai());
+                out.println("<hr/>");
             }
             
             out.println("</body>");
